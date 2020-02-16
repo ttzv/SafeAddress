@@ -15,6 +15,18 @@ namespace RecipientHelper.Properties
         public RecipientHlp_TaskPane()
         {
             InitializeComponent();
+
+        }
+
+        public int getMaxHeight()
+        {
+            int maxHeight = this.Height;
+            foreach (Control control in this.Controls)
+            {
+                if (control.Height > maxHeight)
+                    maxHeight = control.Height;
+            }
+            return maxHeight;
         }
     }
 }
