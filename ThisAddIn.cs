@@ -23,6 +23,8 @@ namespace RecipientHelper
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
             this.safeDomains = new ArrayList(ConfigurationManager.AppSettings["safeDomains"].Split(','));
+            ArrayList userSafeDomains = new ArrayList(Properties.Settings.Default.safeDomains.Split(','));
+            this.safeDomains.AddRange(userSafeDomains);
 
             ctpWindowWrapper = new CTP_InspectorWrapper();
             mailItemWindowWrapper = new MailItem_InspectorWrapper();
@@ -53,7 +55,7 @@ namespace RecipientHelper
             if (explorer != null)
             {
                 explorer.InlineResponse -= CurrentExplorer_InlineResponse;
-                explorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
+                explorer.InlineResponseClose -= CurrentExplorer_InlineResponseClose;
                 ExplorerEvents_10_Event explorerEvents = explorer;
                 explorerEvents.Close -= ExplorerEvents_Close;
             }
