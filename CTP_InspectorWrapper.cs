@@ -13,27 +13,27 @@ namespace RecipientHelper
 {
     class CTP_InspectorWrapper
     {
-        private Dictionary<Outlook.Inspector, OfficeTools.CustomTaskPane> inspectorCtpDict;
+        private Dictionary<Object, CustomTaskPane> windowCtpDict;
 
         public CTP_InspectorWrapper()
         {
-            this.inspectorCtpDict = new Dictionary<Inspector, CustomTaskPane>();
+            this.windowCtpDict = new Dictionary<Object, CustomTaskPane>();
         }
 
-        public void add(Outlook.Inspector inspector, OfficeTools.CustomTaskPane ctp)
+        public void add(Object window, CustomTaskPane ctp)
         {
-            if (inspector != null)
+            if (window != null)
             {
-                this.inspectorCtpDict.Add(inspector, ctp);
+                this.windowCtpDict.Add(window, ctp);
             }
         }
 
-        public OfficeTools.CustomTaskPane getCtpOf(Outlook.Inspector inspector)
+        public CustomTaskPane getCtpOf(Object window)
         {
             CustomTaskPane ctp;
-            if (inspector != null)
+            if (window != null)
             {
-                if (this.inspectorCtpDict.TryGetValue(inspector, out ctp))
+                if (this.windowCtpDict.TryGetValue(window, out ctp))
                 {
                     return ctp;
                 }
@@ -46,9 +46,9 @@ namespace RecipientHelper
             return null;
         }
 
-        public void removeItemOf (Inspector key)
+        public void removeItemOf (Object window)
         {
-            this.inspectorCtpDict.Remove(key);
+            this.windowCtpDict.Remove(window);
         }
     }
 }

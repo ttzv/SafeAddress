@@ -10,22 +10,22 @@ namespace RecipientHelper
     class MailItem_InspectorWrapper
     {
 
-        private Dictionary<Inspector, MailItem> inspectorMailItemDict;
+        private Dictionary<Object, MailItem> windowMailItemDict;
 
         public MailItem_InspectorWrapper()
         {
-            this.inspectorMailItemDict = new Dictionary<Inspector, MailItem>();
+            this.windowMailItemDict = new Dictionary<Object, MailItem>();
         }
 
-        public void add(Inspector key, MailItem value)
+        public void add(Object window, MailItem mailItem)
         {
-            this.inspectorMailItemDict.Add(key, value);
+            this.windowMailItemDict.Add(window, mailItem);
         }
 
-        public MailItem getMailItemBy(Inspector inspector)
+        public MailItem getMailItemBy(Object window)
         {
             MailItem mailItem;
-            if (this.inspectorMailItemDict.TryGetValue(inspector, out mailItem))
+            if (this.windowMailItemDict.TryGetValue(window, out mailItem))
             {
                 return mailItem;
             } else
@@ -34,9 +34,9 @@ namespace RecipientHelper
             }
         }
 
-        public void removeItemOf (Inspector key)
+        public void removeItemOf (Object window)
         {
-            this.inspectorMailItemDict.Remove(key);
+            this.windowMailItemDict.Remove(window);
         }
 
 

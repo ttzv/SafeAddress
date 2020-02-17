@@ -14,32 +14,49 @@ namespace RecipientHelper
     {
         private ArrayList safeDomains;
 
-        Outlook.Inspectors inspectors;
-        Outlook.Explorer currentExplorer = null;
+        Inspectors inspectors;
+        Explorers explorers;
 
-        private CTP_InspectorWrapper ctpInspectorWrapper;
-        private MailItem_InspectorWrapper mailItemInspectorWrapper;
-
-        private bool inlineResponseActive;
-        private CustomTaskPane ctpInExplorer;
-        private MailItem mailItemInExplorer;
-
-        private string rechlp_titleBar_title;
-
+        private CTP_InspectorWrapper ctpWindowWrapper;
+        private MailItem_InspectorWrapper mailItemWindowWrapper;
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
             this.safeDomains = new ArrayList(ConfigurationManager.AppSettings["safeDomains"].Split(','));
 
-            ctpInspectorWrapper = new CTP_InspectorWrapper();
-            mailItemInspectorWrapper = new MailItem_InspectorWrapper();
+            ctpWindowWrapper = new CTP_InspectorWrapper();
+            mailItemWindowWrapper = new MailItem_InspectorWrapper();
 
-            currentExplorer = this.Application.ActiveExplorer();
+            explorers = this.Application.Explorers;
+            explorers.NewExplorer += Explorers_NewExplorer;
+
+            Explorer currentExplorer = this.Application.ActiveExplorer();
             currentExplorer.InlineResponse += CurrentExplorer_InlineResponse;
             currentExplorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
 
             inspectors = this.Application.Inspectors;
-            inspectors.NewInspector += new Outlook.InspectorsEvents_NewInspectorEventHandler(Inspectors_NewInspector);
+            inspectors.NewInspector += new InspectorsEvents_NewInspectorEventHandler(Inspectors_NewInspector);
+        }
+
+        private void Explorers_NewExplorer(Explorer Explorer)
+        {
+            Debug.WriteLine("Opened new explorer");
+            Explorer.InlineResponse += CurrentExplorer_InlineResponse;
+            Explorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
+            ExplorerEvents_10_Event explorerEvents = Explorer;
+            explorerEvents.Close += ExplorerEvents_Close;
+        }
+
+        private void ExplorerEvents_Close()
+        {
+            Explorer explorer = this.Application.ActiveExplorer();
+            if (explorer != null)
+            {
+                explorer.InlineResponse -= CurrentExplorer_InlineResponse;
+                explorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
+                ExplorerEvents_10_Event explorerEvents = explorer;
+                explorerEvents.Close -= ExplorerEvents_Close;
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, EventArgs e)
@@ -48,10 +65,10 @@ namespace RecipientHelper
             //    must run when Outlook shuts down, see https://go.microsoft.com/fwlink/?LinkId=506785
         }
 
-        private void toggleInspectorCtp(Inspector inspector)
+        private void toggleWindowCtp(Object window)
         {
-            CustomTaskPane ctp = this.ctpInspectorWrapper.getCtpOf(inspector);
-            MailItem mailItem = inspector.CurrentItem as MailItem;
+            CustomTaskPane ctp = this.ctpWindowWrapper.getCtpOf(window);
+            MailItem mailItem = this.mailItemWindowWrapper.getMailItemBy(window);
             
             if (containsRestrictedRecipent(mailItem.Recipients) && ctp != null)
             {
@@ -63,27 +80,10 @@ namespace RecipientHelper
             }
         }
 
-        private void toggleExplorerCtp(MailItem mailItem)
-        {
-            if (mailItem != null && this.ctpInExplorer != null)
-            {
-                if (containsRestrictedRecipent(mailItem.Recipients) && this.ctpInExplorer != null)
-                {
-                    this.ctpInExplorer.Visible = true;
-                }
-                else if (!containsRestrictedRecipent(mailItem.Recipients) && this.ctpInExplorer != null && this.ctpInExplorer.Visible)
-                {
-                    this.ctpInExplorer.Visible = false;
-                }
-            }
-        }
-
-        void Inspectors_NewInspector(Outlook.Inspector Inspector)
+        void Inspectors_NewInspector(Inspector Inspector)
         {
             InspectorEvents_10_Event inspectorEvents;
             inspectorEvents = (InspectorEvents_10_Event)Inspector;
-            inspectorEvents.Activate += _inspectorEvents_Activate;
-            inspectorEvents.Deactivate += _inspectorEvents_Deactivate;
             inspectorEvents.Close += _inspectorEvents_Close;
 
             Debug.WriteLine("Inspector Opened");
@@ -91,104 +91,102 @@ namespace RecipientHelper
             if (mailItem != null)
             {
                 mailItem.PropertyChange += MailItem_PropertyChange;
-                addCustomTaskPaneToInspector(Inspector);
-                toggleInspectorCtp(Inspector);
+                addCtpToWindow(Inspector, mailItem);
+                toggleWindowCtp(Inspector);
             }      
-        }
-
-        private void _inspectorEvents_Activate()
-        {
-            Debug.WriteLine("Inspector activated");
-        }
-
-        private void _inspectorEvents_Deactivate()
-        {
-            Debug.WriteLine("Inspector deactivated");
-            //this.currentInspector = this.Application.ActiveInspector();
         }
 
         private void _inspectorEvents_Close()
         {
             Inspector currentInspector = this.Application.ActiveInspector();
-            CustomTaskPane currentTaskPane = this.ctpInspectorWrapper.getCtpOf(currentInspector);
-            this.CustomTaskPanes.Remove(currentTaskPane);
-            this.ctpInspectorWrapper.removeItemOf(currentInspector);
-            this.mailItemInspectorWrapper.removeItemOf(currentInspector);
+            if (currentInspector != null)
+            {
+                CustomTaskPane currentTaskPane = this.ctpWindowWrapper.getCtpOf(currentInspector);
+                MailItem currentMailItem = this.mailItemWindowWrapper.getMailItemBy(currentInspector);
+                if (currentTaskPane != null && currentMailItem != null)
+                {
+                    this.CustomTaskPanes.Remove(currentTaskPane);
+                    this.ctpWindowWrapper.removeItemOf(currentInspector);
+                    this.mailItemWindowWrapper.removeItemOf(currentInspector);
 
-            Debug.WriteLine("Inspector closed");
+                    InspectorEvents_10_Event currentInspectorEvents = (InspectorEvents_10_Event)currentInspector;                    
+                    currentInspectorEvents.Close -= _inspectorEvents_Close;
+                    currentMailItem.PropertyChange -= MailItem_PropertyChange;
+
+                    Debug.WriteLine("Inspector closed");
+                }
+            }
         }
 
         private void CurrentExplorer_InlineResponse(object Item)
         {
-            this.inlineResponseActive = true;
-            this.mailItemInExplorer = Item as MailItem;
+            MailItem mailItemInExplorer = Item as MailItem;
+            Explorer currentExplorer = this.Application.ActiveExplorer();
 
-            this.mailItemInExplorer.PropertyChange += MailItem_PropertyChange;
-            addCustomTaskPaneToExplorer();
-            toggleExplorerCtp(this.mailItemInExplorer);
+            mailItemInExplorer.PropertyChange += MailItem_PropertyChange;
+            addCtpToWindow(currentExplorer, mailItemInExplorer);
+            toggleWindowCtp(currentExplorer);
             Debug.WriteLine("Opened Item in reading pane");
         }
 
        private void CurrentExplorer_InlineResponseClose()
         {
-            this.inlineResponseActive = false;
-            this.CustomTaskPanes.Remove(this.ctpInExplorer);
-            this.ctpInExplorer = null;
+            Explorer explorer = this.Application.ActiveExplorer();
+            CustomTaskPane customTaskPane = this.ctpWindowWrapper.getCtpOf(explorer);
+            this.CustomTaskPanes.Remove(customTaskPane);
+            this.ctpWindowWrapper.removeItemOf(explorer);
+            this.mailItemWindowWrapper.removeItemOf(explorer);
         }
 
         private void MailItem_PropertyChange(string Name)
         {
             Inspector inspector = this.Application.ActiveInspector();
-            if (inspector == null && this.inlineResponseActive)
+            Explorer explorer = this.Application.ActiveExplorer();
+            if (inspector == null)
             {
-                addCustomTaskPaneToExplorer();
-                toggleExplorerCtp(this.mailItemInExplorer);
+                toggleWindowCtp(explorer);
             } else
             {
-                addCustomTaskPaneToInspector(inspector);
-                toggleInspectorCtp(inspector);
+                toggleWindowCtp(inspector);
             }
         }
 
         private Boolean containsRestrictedRecipent(Recipients recipients)
         {
-            foreach (Recipient recipient in recipients)
+           foreach (Recipient recipient in recipients)
             {
-                if (recipient.Address != null) {
-                    Debug.WriteLine(recipient.Address);
-                    String domain = recipient.Address.ToString().Split('@')[1];
-                    if (!this.safeDomains.Contains(domain))
-                    {
-                        return true;
-                    }
+                string host;
+                try
+                {
+                    host = new System.Net.Mail.MailAddress(recipient.Address).Host;
+                } catch (FormatException)
+                {
+                    host = null;
+                    return false;
+                } catch (ArgumentNullException)
+                {
+                    host = null;
+                    return false;
+                }
+                if (!this.safeDomains.Contains(host))
+                {
+                    return true;
                 }
             }
             return false;
         }
 
-        private void addCustomTaskPaneToInspector(Inspector inspector)
+        private void addCtpToWindow(Object window, MailItem mailItem)
         {
              //add new ctp only if there is none added already
-            if (inspector != null && this.ctpInspectorWrapper.getCtpOf(inspector) == null)
+            if (window != null && this.ctpWindowWrapper.getCtpOf(window) == null)
             {
                 RecipientHlp_TaskPane userControl = new RecipientHlp_TaskPane();
-                CustomTaskPane customTaskPane = this.CustomTaskPanes.Add(userControl, Strings.rechlp_titleBar_title, inspector);
-                this.ctpInspectorWrapper.add(inspector, customTaskPane);
-                this.mailItemInspectorWrapper.add(inspector, (MailItem)inspector.CurrentItem);
-                customTaskPane = this.ctpInspectorWrapper.getCtpOf(inspector);
-                Debug.WriteLine("Elements: " + this.CustomTaskPanes.Count);
+                CustomTaskPane customTaskPane = this.CustomTaskPanes.Add(userControl, Strings.rechlp_titleBar_title, window);
+                this.ctpWindowWrapper.add(window, customTaskPane);
+                this.mailItemWindowWrapper.add(window, mailItem);
 
                 ctpConfig(customTaskPane, userControl);
-            }
-        }
-
-        private void addCustomTaskPaneToExplorer()
-        {
-            if (inlineResponseActive && this.ctpInExplorer == null)
-            {
-                RecipientHlp_TaskPane userControl = new RecipientHlp_TaskPane();
-                this.ctpInExplorer = this.CustomTaskPanes.Add(userControl, Strings.rechlp_titleBar_title);
-                ctpConfig(this.ctpInExplorer, userControl);
             }
         }
 
@@ -235,8 +233,6 @@ namespace RecipientHelper
                 customTaskPane.Visible = false;
             }
         }
-
-        
 
         #region VSTO generated code
 
