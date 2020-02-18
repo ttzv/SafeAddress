@@ -16,6 +16,7 @@ namespace RecipientHelper
 
         Inspectors inspectors;
         Explorers explorers;
+        private int _explorersCount;
 
         private CTP_InspectorWrapper ctpWindowWrapper;
         private MailItem_InspectorWrapper mailItemWindowWrapper;
@@ -35,22 +36,37 @@ namespace RecipientHelper
             Explorer currentExplorer = this.Application.ActiveExplorer();
             currentExplorer.InlineResponse += CurrentExplorer_InlineResponse;
             currentExplorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
+            ExplorerEvents_10_Event explorerEvents = currentExplorer;
+            //explorerEvents.Activate += ExplorerEvents_Activate;
 
             inspectors = this.Application.Inspectors;
             inspectors.NewInspector += new InspectorsEvents_NewInspectorEventHandler(Inspectors_NewInspector);
+
+            this._explorersCount = this.explorers.Count;
         }
 
         private void Explorers_NewExplorer(Explorer Explorer)
         {
+            this._explorersCount = this.explorers.Count;
             Debug.WriteLine("Opened new explorer");
             Explorer.InlineResponse += CurrentExplorer_InlineResponse;
             Explorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
             ExplorerEvents_10_Event explorerEvents = Explorer;
             explorerEvents.Close += ExplorerEvents_Close;
+            //explorerEvents.Activate += ExplorerEvents_Activate;
+        }
+
+        private void ExplorerEvents_Activate()
+        {
+            Debug.WriteLine("Explorer activated");
+            //this.currentExplorer = this.Application.ActiveExplorer();
         }
 
         private void ExplorerEvents_Close()
         {
+            this._explorersCount--;
+            
+            /*Debug.WriteLine("Explorer closed");
             Explorer explorer = this.Application.ActiveExplorer();
             if (explorer != null)
             {
@@ -58,7 +74,8 @@ namespace RecipientHelper
                 explorer.InlineResponseClose -= CurrentExplorer_InlineResponseClose;
                 ExplorerEvents_10_Event explorerEvents = explorer;
                 explorerEvents.Close -= ExplorerEvents_Close;
-            }
+                explorerEvents.Activate -= ExplorerEvents_Activate;
+            }*/
         }
 
         private void ThisAddIn_Shutdown(object sender, EventArgs e)
@@ -122,6 +139,7 @@ namespace RecipientHelper
 
         private void CurrentExplorer_InlineResponse(object Item)
         {
+
             MailItem mailItemInExplorer = Item as MailItem;
             Explorer currentExplorer = this.Application.ActiveExplorer();
 
@@ -133,11 +151,16 @@ namespace RecipientHelper
 
        private void CurrentExplorer_InlineResponseClose()
         {
-            Explorer explorer = this.Application.ActiveExplorer();
-            CustomTaskPane customTaskPane = this.ctpWindowWrapper.getCtpOf(explorer);
-            this.CustomTaskPanes.Remove(customTaskPane);
-            this.ctpWindowWrapper.removeItemOf(explorer);
-            this.mailItemWindowWrapper.removeItemOf(explorer);
+            Debug.WriteLine("Explorers" + this.explorers.Count);
+            Debug.WriteLine("inline closed");
+            if (this._explorersCount == this.explorers.Count)
+            {
+                Explorer explorer = this.Application.ActiveExplorer();
+                CustomTaskPane customTaskPane = this.ctpWindowWrapper.getCtpOf(explorer);
+                this.CustomTaskPanes.Remove(customTaskPane);
+                this.ctpWindowWrapper.removeItemOf(explorer);
+                this.mailItemWindowWrapper.removeItemOf(explorer);
+            }
         }
 
         private void MailItem_PropertyChange(string Name)
