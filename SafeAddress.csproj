@@ -232,9 +232,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ribbon_RecHlp.az-Latn.resx">
-      <DependentUpon>Ribbon_RecHlp.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Ribbon_RecHlp.pl-PL.resx">
       <DependentUpon>Ribbon_RecHlp.cs</DependentUpon>
     </EmbeddedResource>

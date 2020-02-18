@@ -17,7 +17,8 @@ namespace RecipientHelper
         Inspectors inspectors;
         Explorers explorers;
         private int _explorersCount;
-
+        private bool inlineResponseActive;
+        private bool anyInspectorActive;
         private CTP_InspectorWrapper ctpWindowWrapper;
         private MailItem_InspectorWrapper mailItemWindowWrapper;
 
@@ -43,6 +44,8 @@ namespace RecipientHelper
             inspectors.NewInspector += new InspectorsEvents_NewInspectorEventHandler(Inspectors_NewInspector);
 
             this._explorersCount = this.explorers.Count;
+            this.inlineResponseActive = false;
+            this.anyInspectorActive = false;
         }
 
         private void Explorers_NewExplorer(Explorer Explorer)
@@ -104,6 +107,8 @@ namespace RecipientHelper
             InspectorEvents_10_Event inspectorEvents;
             inspectorEvents = (InspectorEvents_10_Event)Inspector;
             inspectorEvents.Close += _inspectorEvents_Close;
+            inspectorEvents.Activate += InspectorEvents_Activate;
+            inspectorEvents.Deactivate += InspectorEvents_Deactivate;
 
             Debug.WriteLine("Inspector Opened");
             MailItem mailItem = Inspector.CurrentItem as MailItem;
@@ -113,6 +118,16 @@ namespace RecipientHelper
                 addCtpToWindow(Inspector, mailItem);
                 toggleWindowCtp(Inspector);
             }      
+        }
+
+        private void InspectorEvents_Deactivate()
+        {
+            this.anyInspectorActive = false;
+        }
+
+        private void InspectorEvents_Activate()
+        {
+            this.anyInspectorActive = true;
         }
 
         private void _inspectorEvents_Close()
@@ -139,7 +154,7 @@ namespace RecipientHelper
 
         private void CurrentExplorer_InlineResponse(object Item)
         {
-
+            this.inlineResponseActive = true;
             MailItem mailItemInExplorer = Item as MailItem;
             Explorer currentExplorer = this.Application.ActiveExplorer();
 
@@ -151,6 +166,7 @@ namespace RecipientHelper
 
        private void CurrentExplorer_InlineResponseClose()
         {
+            this.inlineResponseActive = false;
             Debug.WriteLine("Explorers" + this.explorers.Count);
             Debug.WriteLine("inline closed");
             if (this._explorersCount == this.explorers.Count)
@@ -167,7 +183,7 @@ namespace RecipientHelper
         {
             Inspector inspector = this.Application.ActiveInspector();
             Explorer explorer = this.Application.ActiveExplorer();
-            if (inspector == null)
+            if (inspector == null || this.inlineResponseActive && !this.anyInspectorActive)
             {
                 toggleWindowCtp(explorer);
             } else

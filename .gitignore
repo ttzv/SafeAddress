@@ -2,9 +2,4 @@
 workDir
 bin/
 obj/
-RecipientHelper_TemporaryKey.pfx
-RecipientHelper.csproj RecipientHelper.csproj.user
-RecipientHelper.csproj
-RecipientHelper.csproj.user
-RecipientHelper — kopia.csproj RecipientHelper.csproj
 SafeAddress.csproj
