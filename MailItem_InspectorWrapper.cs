@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Outlook;
 
-namespace RecipientHelper
+namespace SafeAddress
 {
     class MailItem_InspectorWrapper
     {

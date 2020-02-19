@@ -1,4 +1,4 @@
-﻿namespace RecipientHelper.Properties
+﻿namespace SafeAddress.Properties
 {
     partial class RecipientHlp_TaskPane
     {

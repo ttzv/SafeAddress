@@ -1,13 +1,13 @@
-﻿namespace RecipientHelper
+﻿namespace SafeAddress
 {
-    partial class Ribbon_RecHlp : Microsoft.Office.Tools.Ribbon.RibbonBase
+    partial class Ribbon : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        public Ribbon_RecHlp()
+        public Ribbon()
             : base(Globals.Factory.GetRibbonFactory())
         {
             InitializeComponent();
@@ -34,7 +34,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon_RecHlp));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon));
             this.rh_tab = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.button1 = this.Factory.CreateRibbonButton();
@@ -85,9 +85,9 @@
 
     partial class ThisRibbonCollection
     {
-        internal Ribbon_RecHlp Ribbon1
+        internal Ribbon Ribbon1
         {
-            get { return this.GetRibbon<Ribbon_RecHlp>(); }
+            get { return this.GetRibbon<Ribbon>(); }
         }
     }
 }

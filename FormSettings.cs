@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Configuration;
 
-namespace RecipientHelper
+namespace SafeAddress
 {
     public partial class RecHlpSettings : Form
     {
@@ -22,8 +22,18 @@ namespace RecipientHelper
             InitializeComponent();
             this.safeDomains = new ArrayList(ConfigurationManager.AppSettings["safeDomains"].Split(','));
             this.userSafeDomains = new ArrayList(Properties.Settings.Default.safeDomains.Split(','));
-            this.listBox_safeDomain.Items.AddRange(safeDomains.ToArray());
-            this.listBox_safeDomain.Items.AddRange(userSafeDomains.ToArray());
+            if (this.safeDomains.Count > 0)
+            {
+                this.listBox_safeDomain.Items.AddRange(safeDomains.ToArray());
+            }
+            if(this.userSafeDomains[0].ToString().Length == 0)
+            {
+                this.userSafeDomains.RemoveAt(0);
+            }
+            if (this.userSafeDomains.Count > 0) 
+            {
+                this.listBox_safeDomain.Items.AddRange(userSafeDomains.ToArray());
+            }
         }
 
         private void button_addDomain_Click(object sender, EventArgs e)
@@ -31,7 +41,8 @@ namespace RecipientHelper
             string newDomain = this.textBox_newDomain.Text;
             if(newDomain != null && newDomain.Length != 0 
                 && !safeDomains.Contains(newDomain) 
-                && !this.listBox_safeDomain.Items.Contains(newDomain))
+                && !this.listBox_safeDomain.Items.Contains(newDomain)
+                && !newDomain.Contains(","))
             {
                 this.listBox_safeDomain.Items.Add(newDomain.Trim().ToLower());
                 this.userSafeDomains.Add(newDomain);
@@ -55,7 +66,7 @@ namespace RecipientHelper
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/ttzv/RecipientHelper");
+            System.Diagnostics.Process.Start("https://github.com/ttzv/SafeAddress");
         }
 
         private void saveSafeDomainsProperty()

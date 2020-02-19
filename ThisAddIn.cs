@@ -2,13 +2,13 @@
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Office = Microsoft.Office.Core;
 using Debug = System.Diagnostics.Debug;
-using RecipientHelper.Properties;
+using SafeAddress.Properties;
 using Microsoft.Office.Tools;
 using Microsoft.Office.Interop.Outlook;
 using System.Configuration;
 using System.Collections;
 
-namespace RecipientHelper
+namespace SafeAddress
 {
     public partial class ThisAddIn
     {
@@ -38,7 +38,6 @@ namespace RecipientHelper
             currentExplorer.InlineResponse += CurrentExplorer_InlineResponse;
             currentExplorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
             ExplorerEvents_10_Event explorerEvents = currentExplorer;
-            //explorerEvents.Activate += ExplorerEvents_Activate;
 
             inspectors = this.Application.Inspectors;
             inspectors.NewInspector += new InspectorsEvents_NewInspectorEventHandler(Inspectors_NewInspector);
@@ -56,29 +55,11 @@ namespace RecipientHelper
             Explorer.InlineResponseClose += CurrentExplorer_InlineResponseClose;
             ExplorerEvents_10_Event explorerEvents = Explorer;
             explorerEvents.Close += ExplorerEvents_Close;
-            //explorerEvents.Activate += ExplorerEvents_Activate;
-        }
-
-        private void ExplorerEvents_Activate()
-        {
-            Debug.WriteLine("Explorer activated");
-            //this.currentExplorer = this.Application.ActiveExplorer();
         }
 
         private void ExplorerEvents_Close()
         {
             this._explorersCount--;
-            
-            /*Debug.WriteLine("Explorer closed");
-            Explorer explorer = this.Application.ActiveExplorer();
-            if (explorer != null)
-            {
-                explorer.InlineResponse -= CurrentExplorer_InlineResponse;
-                explorer.InlineResponseClose -= CurrentExplorer_InlineResponseClose;
-                ExplorerEvents_10_Event explorerEvents = explorer;
-                explorerEvents.Close -= ExplorerEvents_Close;
-                explorerEvents.Activate -= ExplorerEvents_Activate;
-            }*/
         }
 
         private void ThisAddIn_Shutdown(object sender, EventArgs e)
@@ -91,7 +72,7 @@ namespace RecipientHelper
         {
             CustomTaskPane ctp = this.ctpWindowWrapper.getCtpOf(window);
             MailItem mailItem = this.mailItemWindowWrapper.getMailItemBy(window);
-            
+
             if (containsRestrictedRecipent(mailItem.Recipients) && ctp != null)
             {
                 ctp.Visible = true;
@@ -117,7 +98,7 @@ namespace RecipientHelper
                 mailItem.PropertyChange += MailItem_PropertyChange;
                 addCtpToWindow(Inspector, mailItem);
                 toggleWindowCtp(Inspector);
-            }      
+            }
         }
 
         private void InspectorEvents_Deactivate()
@@ -143,7 +124,7 @@ namespace RecipientHelper
                     this.ctpWindowWrapper.removeItemOf(currentInspector);
                     this.mailItemWindowWrapper.removeItemOf(currentInspector);
 
-                    InspectorEvents_10_Event currentInspectorEvents = (InspectorEvents_10_Event)currentInspector;                    
+                    InspectorEvents_10_Event currentInspectorEvents = (InspectorEvents_10_Event)currentInspector;
                     currentInspectorEvents.Close -= _inspectorEvents_Close;
                     currentMailItem.PropertyChange -= MailItem_PropertyChange;
 
@@ -164,7 +145,7 @@ namespace RecipientHelper
             Debug.WriteLine("Opened Item in reading pane");
         }
 
-       private void CurrentExplorer_InlineResponseClose()
+        private void CurrentExplorer_InlineResponseClose()
         {
             this.inlineResponseActive = false;
             Debug.WriteLine("Explorers" + this.explorers.Count);
@@ -186,7 +167,8 @@ namespace RecipientHelper
             if (inspector == null || this.inlineResponseActive && !this.anyInspectorActive)
             {
                 toggleWindowCtp(explorer);
-            } else
+            }
+            else
             {
                 toggleWindowCtp(inspector);
             }
@@ -194,17 +176,19 @@ namespace RecipientHelper
 
         private Boolean containsRestrictedRecipent(Recipients recipients)
         {
-           foreach (Recipient recipient in recipients)
+            foreach (Recipient recipient in recipients)
             {
                 string host;
                 try
                 {
                     host = new System.Net.Mail.MailAddress(recipient.Address).Host;
-                } catch (FormatException)
+                }
+                catch (FormatException)
                 {
                     host = null;
                     return false;
-                } catch (ArgumentNullException)
+                }
+                catch (ArgumentNullException)
                 {
                     host = null;
                     return false;
@@ -219,7 +203,7 @@ namespace RecipientHelper
 
         private void addCtpToWindow(Object window, MailItem mailItem)
         {
-             //add new ctp only if there is none added already
+            //add new ctp only if there is none added already
             if (window != null && this.ctpWindowWrapper.getCtpOf(window) == null)
             {
                 RecipientHlp_TaskPane userControl = new RecipientHlp_TaskPane();
@@ -286,7 +270,7 @@ namespace RecipientHelper
             this.Startup += new EventHandler(ThisAddIn_Startup);
             this.Shutdown += new EventHandler(ThisAddIn_Shutdown);
         }
-        
+
         #endregion
     }
 }

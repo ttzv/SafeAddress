@@ -24,8 +24,8 @@
     <ProjectGuid>{EAF3274C-38F2-48BA-9562-43E0B7F830FE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <RootNamespace>RecipientHelper</RootNamespace>
-    <AssemblyName>RecipientHelper</AssemblyName>
+    <RootNamespace>SafeAddress</RootNamespace>
+    <AssemblyName>SafeAddress</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -38,10 +38,10 @@
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <IsWebBootstrapper>False</IsWebBootstrapper>
-    <ProductName>RecipientHelper</ProductName>
+    <ProductName>SafeAddress</ProductName>
     <PublisherName />
     <SupportUrl />
-    <FriendlyName>RecipientHelper</FriendlyName>
+    <FriendlyName>SafeAddress</FriendlyName>
     <OfficeApplicationDescription />
     <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
@@ -185,11 +185,11 @@
   -->
   <ItemGroup>
     <Compile Include="CTP_InspectorWrapper.cs" />
-    <Compile Include="Form_RecHlpSett.cs">
+    <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_RecHlpSett.Designer.cs">
-      <DependentUpon>Form_RecHlpSett.cs</DependentUpon>
+    <Compile Include="FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="MailItem_InspectorWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -200,11 +200,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form_RecHlpSett.pl.resx">
-      <DependentUpon>Form_RecHlpSett.cs</DependentUpon>
+    <EmbeddedResource Include="FormSettings.pl.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_RecHlpSett.resx">
-      <DependentUpon>Form_RecHlpSett.cs</DependentUpon>
+    <EmbeddedResource Include="FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -232,14 +232,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ribbon_RecHlp.pl-PL.resx">
-      <DependentUpon>Ribbon_RecHlp.cs</DependentUpon>
+    <EmbeddedResource Include="Ribbon.pl-PL.resx">
+      <DependentUpon>Ribbon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ribbon_RecHlp.pl.resx">
-      <DependentUpon>Ribbon_RecHlp.cs</DependentUpon>
+    <EmbeddedResource Include="Ribbon.pl.resx">
+      <DependentUpon>Ribbon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ribbon_RecHlp.resx">
-      <DependentUpon>Ribbon_RecHlp.cs</DependentUpon>
+    <EmbeddedResource Include="Ribbon.resx">
+      <DependentUpon>Ribbon.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
@@ -257,11 +257,11 @@
     <Compile Include="Properties\UserControl_Hint.Designer.cs">
       <DependentUpon>UserControl_Hint.cs</DependentUpon>
     </Compile>
-    <Compile Include="Ribbon_RecHlp.cs">
+    <Compile Include="Ribbon.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Ribbon_RecHlp.Designer.cs">
-      <DependentUpon>Ribbon_RecHlp.cs</DependentUpon>
+    <Compile Include="Ribbon.Designer.cs">
+      <DependentUpon>Ribbon.cs</DependentUpon>
     </Compile>
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
@@ -290,6 +290,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNew|AnyCPU'">
     <OutputPath>bin\DebugNew\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- Include additional build rules for an Office application add-in. -->
@@ -299,7 +302,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Outlook" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Outlook" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Outlook\InstallRoot\Path#outlook.exe" AddItemTemplatesGuid="{A58A78EB-1C92-4DDD-80CF-E8BD872ABFC4}" />
-        <Host Name="Outlook" GeneratedCodeNamespace="RecipientHelper" IconIndex="0">
+        <Host Name="Outlook" GeneratedCodeNamespace="SafeAddress" IconIndex="0">
           <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
         </Host>
       </FlavorProperties>

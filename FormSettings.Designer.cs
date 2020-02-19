@@ -1,4 +1,4 @@
-﻿namespace RecipientHelper
+﻿namespace SafeAddress
 {
     partial class RecHlpSettings
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 
-namespace RecipientHelper
+namespace SafeAddress
 {
-    public partial class Ribbon_RecHlp
+    public partial class Ribbon
     {
         private RecHlpSettings recHlpSettings;
 

@@ -9,7 +9,7 @@ using System.Diagnostics;
 using Microsoft.Office.Interop.Outlook;
 using Microsoft.Office.Tools;
 
-namespace RecipientHelper
+namespace SafeAddress
 {
     class CTP_InspectorWrapper
     {
