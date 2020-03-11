@@ -7,6 +7,8 @@ using Microsoft.Office.Tools;
 using Microsoft.Office.Interop.Outlook;
 using System.Configuration;
 using System.Collections;
+using System.Windows.Forms;
+using System.Windows;
 
 namespace SafeAddress
 {
@@ -227,6 +229,11 @@ namespace SafeAddress
         private int getTitleHeightForCurrVersion()
         {
             int height = 0;
+            int scaling = GetWindowsScaling();
+            if(scaling < 100)
+            {
+                scaling = 100;
+            }
 
             String version = Globals.ThisAddIn.Application.Version;
             Debug.WriteLine(version);
@@ -244,8 +251,10 @@ namespace SafeAddress
                     height = 0;
                     break;
             }
-
-            return height;
+            Debug.WriteLine("Scaling: " + GetWindowsScaling());
+            System.Windows.Forms.MessageBox.Show("Scaling: " + GetWindowsScaling());
+            
+            return height * GetWindowsScaling() / 100;
         }
 
         private void ctpConfig(CustomTaskPane customTaskPane, RecipientHlp_TaskPane userControl)
@@ -257,6 +266,11 @@ namespace SafeAddress
                 customTaskPane.Control.SizeChanged += Control_SizeChanged;
                 customTaskPane.Visible = false;
             }
+        }
+
+        public static int GetWindowsScaling()
+        {
+            return (int)(100 * Screen.PrimaryScreen.Bounds.Width / SystemParameters.PrimaryScreenWidth);
         }
 
         #region VSTO generated code

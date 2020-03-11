@@ -3,3 +3,4 @@ workDir
 bin/
 obj/
 SafeAddress.csproj
+SafeAddress_TemporaryKey.pfx
