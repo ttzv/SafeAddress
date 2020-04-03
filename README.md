@@ -7,7 +7,7 @@ Safe addresses are resolved based on host (e.g. everything after @)
 
 There are two ways of modifying safe hosts:
 * Change property under key "safeDomain" in SafeAddress.dll.config file located in installation directory.
-* Add hosts using from within Outlook application in SafeAddres AddIn Settings located inside Safe Address ribbon.
+* Add hosts from within Outlook application in SafeAddres AddIn Settings located inside Safe Address ribbon.
 
 <img src="https://i.imgur.com/VbIM9Bx.png"></img>
 
