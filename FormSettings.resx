@@ -127,16 +127,10 @@
   <data name="label_newDomain.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 13</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>SafeAddress Settings</value>
-  </data>
   <data name="listBox_safeDomain.Location" type="System.Drawing.Point, System.Drawing">
     <value>222, 36</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -152,9 +146,6 @@
   <data name="lab_version.Size" type="System.Drawing.Size, System.Drawing">
     <value>22, 13</value>
   </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>tabPage2</value>
-  </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
@@ -164,8 +155,8 @@
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 13</value>
+  <data name="button_addDomain.Text" xml:space="preserve">
+    <value>Add</value>
   </data>
   <data name="&gt;&gt;textBox_newDomain.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -192,8 +183,8 @@
   <data name="lab_version.Text" xml:space="preserve">
     <value>0.2</value>
   </data>
-  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 13</value>
   </data>
   <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
     <value>tabPage1</value>
@@ -201,8 +192,8 @@
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>421, 286</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>SafeAddress Settings</value>
   </data>
   <data name="textBox_newDomain.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 20</value>
@@ -273,6 +264,12 @@
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
   <data name="button_addDomain.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -287,6 +284,9 @@
   </data>
   <data name="&gt;&gt;linkLabel1.ZOrder" xml:space="preserve">
     <value>5</value>
+  </data>
+  <data name="&gt;&gt;linkLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;textBox_newDomain.Name" xml:space="preserve">
     <value>textBox_newDomain</value>
@@ -315,6 +315,9 @@
   <data name="&gt;&gt;label4.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>421, 286</value>
+  </data>
   <data name="lab_version.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -342,9 +345,6 @@
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>29, 101</value>
   </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
   <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>tabPage2</value>
   </data>
@@ -354,17 +354,14 @@
   <data name="&gt;&gt;label_version_text.Name" xml:space="preserve">
     <value>label_version_text</value>
   </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="&gt;&gt;listBox_safeDomain.Type" xml:space="preserve">
     <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="linkLabel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>124, 101</value>
   </data>
-  <data name="button_addDomain.Text" xml:space="preserve">
-    <value>Add</value>
+  <data name="&gt;&gt;listBox_safeDomain.Name" xml:space="preserve">
+    <value>listBox_safeDomain</value>
   </data>
   <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -384,8 +381,8 @@
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>tabPage2</value>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="button_removeDomain.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -393,7 +390,7 @@
   <data name="&gt;&gt;label_version_text.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;button_addDomain.ZOrder" xml:space="preserve">
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="&gt;&gt;lab_version.ZOrder" xml:space="preserve">
@@ -468,6 +465,9 @@
   <data name="&gt;&gt;button_removeDomain.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;button_addDomain.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -514,8 +514,8 @@ the next time you start Outlook. </value>
   <data name="&gt;&gt;tabPage1.Parent" xml:space="preserve">
     <value>tabControl1</value>
   </data>
-  <data name="&gt;&gt;linkLabel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="listBox_safeDomain.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -544,8 +544,8 @@ the next time you start Outlook. </value>
   <data name="label_version_text.Location" type="System.Drawing.Point, System.Drawing">
     <value>28, 66</value>
   </data>
-  <data name="&gt;&gt;listBox_safeDomain.Name" xml:space="preserve">
-    <value>listBox_safeDomain</value>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label_newDomain.Parent" xml:space="preserve">
     <value>tabPage1</value>

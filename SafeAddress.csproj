@@ -201,6 +201,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormSettings.pl-PL.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.pl.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>

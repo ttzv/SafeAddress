@@ -125,14 +125,21 @@ namespace SafeAddress
                     this.CustomTaskPanes.Remove(currentTaskPane);
                     this.ctpWindowWrapper.removeItemOf(currentInspector);
                     this.mailItemWindowWrapper.removeItemOf(currentInspector);
+                    
 
                     InspectorEvents_10_Event currentInspectorEvents = (InspectorEvents_10_Event)currentInspector;
                     currentInspectorEvents.Close -= _inspectorEvents_Close;
                     currentMailItem.PropertyChange -= MailItem_PropertyChange;
+                    System.Runtime.InteropServices.Marshal.FinalReleaseComObject(currentMailItem);
+                    currentMailItem = null;
 
                     Debug.WriteLine("Inspector closed");
                 }
             }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            Debug.WriteLine("Forced GC");
         }
 
         private void CurrentExplorer_InlineResponse(object Item)
@@ -251,9 +258,6 @@ namespace SafeAddress
                     height = 0;
                     break;
             }
-            Debug.WriteLine("Scaling: " + GetWindowsScaling());
-            System.Windows.Forms.MessageBox.Show("Scaling: " + GetWindowsScaling());
-            
             return height * GetWindowsScaling() / 100;
         }
 
