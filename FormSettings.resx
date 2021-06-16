@@ -155,8 +155,8 @@
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="button_addDomain.Text" xml:space="preserve">
-    <value>Add</value>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 13</value>
   </data>
   <data name="&gt;&gt;textBox_newDomain.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -183,8 +183,8 @@
   <data name="lab_version.Text" xml:space="preserve">
     <value>0.2</value>
   </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 13</value>
+  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
   </data>
   <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
     <value>tabPage1</value>
@@ -267,9 +267,6 @@
   <data name="&gt;&gt;label5.Parent" xml:space="preserve">
     <value>tabPage2</value>
   </data>
-  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
   <data name="button_addDomain.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -326,6 +323,9 @@
   </data>
   <data name="label_newDomain.Text" xml:space="preserve">
     <value>Insert new safe domain:</value>
+  </data>
+  <data name="button_addDomain.Text" xml:space="preserve">
+    <value>Add</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>1</value>

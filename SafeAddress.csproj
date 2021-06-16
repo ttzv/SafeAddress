@@ -28,6 +28,7 @@
     <AssemblyName>SafeAddress</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
@@ -37,7 +38,6 @@
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
     <ProductName>SafeAddress</ProductName>
     <PublisherName />
     <SupportUrl />
@@ -293,7 +293,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>7522DB534ABFCDD75BA7F216F59E7CDF523AB1C4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D851F3AFF78E02680E2621450B8E041A60CC67C4</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNew|AnyCPU'">
     <OutputPath>bin\DebugNew\</OutputPath>
