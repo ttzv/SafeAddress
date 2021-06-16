@@ -61,6 +61,25 @@ namespace SafeAddress.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wiadomość zawiera adresatów którzy nie należą do twojej organizacji.
+        ///Czy chcesz kontynować?.
+        /// </summary>
+        internal static string confirmDialog_content {
+            get {
+                return ResourceManager.GetString("confirmDialog_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uwaga.
+        /// </summary>
+        internal static string confirmDialog_title {
+            get {
+                return ResourceManager.GetString("confirmDialog_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wskazówka.
         /// </summary>
         internal static string rechlp_titleBar_title {

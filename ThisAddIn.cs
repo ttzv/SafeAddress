@@ -47,6 +47,21 @@ namespace SafeAddress
             this._explorersCount = this.explorers.Count;
             this.inlineResponseActive = false;
             this.anyInspectorActive = false;
+
+            Application.ItemSend += Application_ItemSend;
+        }
+
+        private void Application_ItemSend(object Item, ref bool Cancel)
+        {
+            Outlook.MailItem mail = Item as Outlook.MailItem;
+            if (containsRestrictedRecipent(mail.Recipients))
+            {
+                var result = System.Windows.Forms.MessageBox.Show(Strings.confirmDialog_content,
+                    Strings.confirmDialog_title,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                Cancel = (result == DialogResult.No);
+            }
         }
 
         private void Explorers_NewExplorer(Explorer Explorer)
@@ -265,7 +280,7 @@ namespace SafeAddress
         {
             if (customTaskPane != null)
             {
-                customTaskPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionTop;
+                customTaskPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionBottom;
                 customTaskPane.Height = userControl.getMaxHeight() + getTitleHeightForCurrVersion();
                 customTaskPane.Control.SizeChanged += Control_SizeChanged;
                 customTaskPane.Visible = false;

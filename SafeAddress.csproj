@@ -231,10 +231,13 @@
     <EmbeddedResource Include="Properties\UserControl_Hint.resx">
       <DependentUpon>UserControl_Hint.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Strings.en-US.resx" />
+    <EmbeddedResource Include="Properties\Strings.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Ribbon.pl-PL.resx">
       <DependentUpon>Ribbon.cs</DependentUpon>
@@ -290,7 +293,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D851F3AFF78E02680E2621450B8E041A60CC67C4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>7522DB534ABFCDD75BA7F216F59E7CDF523AB1C4</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNew|AnyCPU'">
     <OutputPath>bin\DebugNew\</OutputPath>

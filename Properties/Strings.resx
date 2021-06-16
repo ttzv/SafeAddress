@@ -117,6 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="confirmDialog_content" xml:space="preserve">
+    <value>Wiadomość zawiera adresatów którzy nie należą do twojej organizacji.
+Czy chcesz kontynować?</value>
+  </data>
+  <data name="confirmDialog_title" xml:space="preserve">
+    <value>Uwaga</value>
+  </data>
   <data name="rechlp_titleBar_title" xml:space="preserve">
     <value>Wskazówka</value>
   </data>
